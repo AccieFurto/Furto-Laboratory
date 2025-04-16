@@ -1,5 +1,75 @@
-import java.util.InputMismatchException;
+package ACTIVITY_1;
 import java.util.Scanner;
+public class TestVehicle {
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+ 
+       
+        System.out.println("Enter Car Details:");
+        System.out.print("Brand: ");
+        String carBrand = scan.nextLine();
+ 
+        System.out.print("Speed: ");
+        int carSpeed = scan.nextInt();
+        scan.nextLine();
+ 
+        System.out.print("Fuel Type: ");
+        String carFuel = scan.nextLine();
+ 
+        System.out.print("Number of Doors: ");
+        int doors = scan.nextInt();
+        scan.nextLine();
+ 
+        Car car = new Car(carBrand, carSpeed, carFuel, doors);
+ 
+       
+        System.out.println("\nEnter Motorcycle Details:");
+        System.out.print("Brand: ");
+        String motorBrand = scan.nextLine();
+ 
+        System.out.print("Speed: ");
+        int motorSpeed = scan.nextInt();
+        scan.nextLine();
+ 
+        System.out.print("Fuel Type: ");
+        String motorFuel = scan.nextLine();
+ 
+        boolean hasSidecar = false;
+        while (true) {
+            System.out.print("Has Sidecar (Yes or No): ");
+            String sidecar = scan.nextLine();
+ 
+            if (sidecar.equalsIgnoreCase("Yes")) {
+                hasSidecar = true;
+                break;
+            } else if (sidecar.equalsIgnoreCase("No")) {
+                hasSidecar = false;
+                break;
+            } else {
+                System.out.println("Invalid input. Please enter Yes or No.");
+            }
+        }
+ 
+        Motorcycle motorcycle = new Motorcycle(motorBrand, motorSpeed, motorFuel, hasSidecar);
+ 
+       
+        System.out.println("\n--- Car Information ---");
+        car.displayInfo();
+        System.out.println("Number of Doors: " + car.getNumDoors());
+ 
+        System.out.println("\n--- Motorcycle Information ---");
+        motorcycle.displayInfo();
+        System.out.print("Has Sidecar: ");
+        if (motorcycle.getHasSidecar()) {
+            System.out.println("Yes");
+        } else {
+            System.out.println("No");
+        }
+ 
+        scan.close();
+    }
+}
+ 
  
 class Vehicle {
     private String brand;
@@ -26,25 +96,25 @@ class Vehicle {
  
     public void displayInfo() {
         System.out.println("Brand: " + brand);
-        System.out.println("Speed: " + speed + " km/h");
+        System.out.println("Speed: " + speed + " kmph");
         System.out.println("Fuel Type: " + fuelType);
     }
 }
  
-class Car extends Vehicle {
-    private int numberOfDoors;
  
-    public Car(String brand, int speed, String fuelType, int numberOfDoors) {
+class Car extends Vehicle {
+    private int numDoors;
+ 
+    public Car(String brand, int speed, String fuelType, int numDoors) {
         super(brand, speed, fuelType);
-        this.numberOfDoors = numberOfDoors;
+        this.numDoors = numDoors;
     }
  
-    @Override
-    public void displayInfo() {
-        super.displayInfo();
-        System.out.println("Number of Doors: " + numberOfDoors);
+    public int getNumDoors() {
+        return numDoors;
     }
 }
+ 
  
 class Motorcycle extends Vehicle {
     private boolean hasSidecar;
@@ -54,57 +124,7 @@ class Motorcycle extends Vehicle {
         this.hasSidecar = hasSidecar;
     }
  
-    @Override
-    public void displayInfo() {
-        super.displayInfo();
-        System.out.println("Has Sidecar: " + (hasSidecar ? "Yes" : "No"));
+    public boolean getHasSidecar() {
+        return hasSidecar;
     }
 }
- 
-public class TestVehicle {
-    public static void main(String[] args) {
-        try (Scanner scanner = new Scanner(System.in)) {
-            try {
-                System.out.println("Enter the details for the Car:");
-                System.out.print("Brand: ");
-                String carBrand = scanner.nextLine();
-                System.out.print("Speed: ");
-                int carSpeed = scanner.nextInt();
-                scanner.nextLine(); // Consume newline
-                System.out.print("Fuel Type: ");
-                String carFuelType = scanner.nextLine();
-                System.out.print("Number of Doors: ");
-                int numberOfDoors = scanner.nextInt();
-                scanner.nextLine(); // Consume newline
- 
-                Car car = new Car(carBrand, carSpeed, carFuelType, numberOfDoors);
- 
-                System.out.println("\nEnter the details for the Motorcycle:");
-                System.out.print("Brand: ");
-                String motorcycleBrand = scanner.nextLine();
-                System.out.print("Speed: ");
-                int motorcycleSpeed = scanner.nextInt();
-                scanner.nextLine(); // Consume newline
-                System.out.print("Fuel Type: ");
-                String motorcycleFuelType = scanner.nextLine();
-                System.out.print("Has Sidecar (true/false): ");
-                boolean hasSidecar = scanner.nextBoolean();
-                scanner.nextLine(); // Consume newline
- 
-                Motorcycle motorcycle = new Motorcycle(motorcycleBrand, motorcycleSpeed, motorcycleFuelType, hasSidecar);
- 
-                System.out.println("\nCar Details:");
-                car.displayInfo();
- 
-                System.out.println("\nMotorcycle Details:");
-                motorcycle.displayInfo();
-            } catch (InputMismatchException e) {
-                System.out.println("Invalid input. Please enter the correct data type.");
-            }
-        }
-    }
-}
-
-
-
-
